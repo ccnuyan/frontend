@@ -1,0 +1,22 @@
+{
+  "plugins": [
+    [
+      "relay",
+      {
+        // "schema": "../backend_boilerplate/schema.graphql",
+        // // Will throw an error when it validates the queries at build time.
+        // "enforceSchema": true,
+        // // Suppresses all warnings that would be printed.
+        // "suppressWarnings": false,
+        // // If `enforceSchema` is `false` and `debug` is `true`
+        // // then validation errors be logged at build time.
+        // "debug": true
+      }
+    ]
+  ],
+  "presets": [
+    "react",
+    "es2015",
+    "stage-2"
+  ]
+}

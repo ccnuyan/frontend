@@ -1,0 +1,185 @@
+type AnonymousInfo {
+  message: String
+}
+
+type Container implements Node {
+  id: ID!
+  title: String
+  owner_email: String
+  owner_nickname: String
+  created_by: String
+  created_at: String
+  team_id: String
+  can_delete: Boolean
+}
+
+input CreateContainerInput {
+  title: String!
+  clientMutationId: String
+}
+
+type CreateContainerPayload {
+  containerEdge: tenantContainersEdge
+  store: Store
+  clientMutationId: String
+}
+
+input DeleteChannelInput {
+  id: String!
+  tenant_id: String!
+  clientMutationId: String
+}
+
+type DeleteChannelPayload {
+  containerEdge: tenantContainersEdge
+  activeTenant: Tenant
+  activeChannel: Container
+  clientMutationId: String
+}
+
+input LocalLoginInput {
+  username: String!
+  password: String!
+  mode: String!
+  clientMutationId: String
+}
+
+type LocalLoginPayload {
+  store: Store
+  clientMutationId: String
+}
+
+input LocalRegisterInput {
+  email: String!
+  password: String!
+  clientMutationId: String
+}
+
+type LocalRegisterPayload {
+  store: Store
+  clientMutationId: String
+}
+
+type LoginInfo {
+  id: String
+  username: String
+  role: String
+  success: String
+  message: String
+  token: String
+}
+
+type Mutation {
+  localLogin(input: LocalLoginInput!): LocalLoginPayload
+  localRegister(input: LocalRegisterInput!): LocalRegisterPayload
+  createContainer(input: CreateContainerInput!): CreateContainerPayload
+  deleteContainer(input: DeleteChannelInput!): DeleteChannelPayload
+  updateContainer(input: UpdateContainerInput!): UpdateContainerPayload
+  setActiveContainer(input: SetActiveContainerInput!): SetActiveContainerPayload
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+type Query {
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+  store: Store
+}
+
+input SetActiveContainerInput {
+  tenant_id: String
+  container_id: String
+  clientMutationId: String
+}
+
+type SetActiveContainerPayload {
+  store: Store
+  clientMutationId: String
+}
+
+type Store implements Node {
+  # The ID of an object
+  id: ID!
+  anonymous: Boolean
+  anonymousInfo: AnonymousInfo
+  loginInfo: LoginInfo
+  tenants(after: String, first: Int, before: String, last: Int): tenantsConnection
+  activeTenant: Tenant
+}
+
+type Tenant implements Node {
+  id: ID!
+  username: String
+  created_at: String
+  containers(after: String, first: Int, before: String, last: Int): tenantContainersConnection
+}
+
+# A connection to a list of items.
+type tenantContainersConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [tenantContainersEdge]
+}
+
+# An edge in a connection.
+type tenantContainersEdge {
+  # The item at the end of the edge
+  node: Container
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+# A connection to a list of items.
+type tenantsConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [tenantsEdge]
+}
+
+# An edge in a connection.
+type tenantsEdge {
+  # The item at the end of the edge
+  node: Tenant
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+input UpdateContainerInput {
+  id: String!
+  team_id: String!
+  title: String!
+  clientMutationId: String
+}
+
+type UpdateContainerPayload {
+  container: Container
+  clientMutationId: String
+}
