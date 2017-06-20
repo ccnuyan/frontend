@@ -8,9 +8,9 @@ import LoginInfoType from './LoginInfoType';
 
 import ndf from '../nodeDefinitions';
 
-import TenantType, { getTenant } from './TenantType';
+// import TenantType, { getTenant } from './TenantType';
 
-import tenants from './TenantConnection';
+// import tenants from './TenantConnection';
 
 const StoreType = new GraphQLObjectType({
   name: 'Store',
@@ -25,13 +25,13 @@ const StoreType = new GraphQLObjectType({
     loginInfo: {
       type: LoginInfoType,
     },
-    tenants: tenants.connection,
-    activeTenant: {
-      type: TenantType,
-      resolve: (st, args, { pPool }) => {
-        return st.activeTenant ? getTenant(pPool, st.activeTenant.id) : getTenant();
-      },
-    },
+    // tenants: tenants.connection,
+    // activeTenant: {
+    //   type: TenantType,
+    //   resolve: (st, args, { pPool }) => {
+    //     return st.activeTenant ? getTenant(pPool, st.activeTenant.id) : getTenant();
+    //   },
+    // },
   }),
   interfaces: () => [ndf.nodeInterface],
 });

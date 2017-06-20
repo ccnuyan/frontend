@@ -41,11 +41,16 @@ export default mutationWithClientMutationId({
       user.token = await pPool
         .query('select provider_token from membership.logins where membership.logins.user_id=$1 and membership.logins.provider=$2', [user.id, 'token'])
         .then(res => res.rows[0].provider_token);
+      // thread authentication
       req.user = user; // eslint-disable-line
+      return {
+        anonymous: false,
+        loginInfo: user,
+      };
     }
     return {
-      anonymous: false,
-      loginInfo: user,
+      anonymous: true,
+      loginInfo: {},
     };
   },
 });

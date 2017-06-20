@@ -14,7 +14,7 @@ export default {
     database: 'backend-boilerplate',
     password: 'admin',
     host: 'localhost',
-    port: 32768,
+    port: 5432,
     max: 10,
     idleTimeoutMillis: 30000,
   },
